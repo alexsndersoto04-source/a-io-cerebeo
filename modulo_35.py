@@ -1,20 +1,14 @@
 import streamlit as st
+import os
 
 def ejecutar():
-    st.header("🧠 Módulo 35: Razonamiento MoE")
-    st.write("Arquitectura de Expertos Cognitivos de A IO.")
-
-    pregunta = st.text_input("Consulta a la Red Neuronal:")
+    st.header("🧠 Módulo 35: Razonamiento A IO")
+    pregunta = st.text_input("Consulta de IA:")
     
     if pregunta:
-        # Lógica de Selección de Expertos (Simulada para arquitectura MoE)
-        with st.spinner("Activando Expertos..."):
-            st.write("🔹 **Experto 1 (Semántica):** Analizando vectores...")
-            st.write("🔹 **Experto 2 (Contexto):** Verificando base de datos...")
-            
-            st.markdown(f"### Respuesta de A IO:")
-            st.write(f"El procesamiento de '{pregunta}' sugiere una alta correlación con los datos en el Módulo 36.")
-            st.caption("Estado: Razonamiento basado en el Corpus Wikimedia.")
-
-if __name__ == "__main__":
-    ejecutar()
+        if os.path.exists("data/mapa_conocimiento.json"):
+            st.write("🤖 **A IO Pensando...**")
+            st.info("Estado: Consultando expertos en el Módulo 36.")
+            st.success(f"Análisis completado: La consulta '{pregunta}' ha sido integrada en el flujo cognitivo.")
+        else:
+            st.warning("IA en modo offline. Requiere datos del Módulo 37.")

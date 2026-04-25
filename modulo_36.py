@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import json
 import linecache
 
@@ -9,6 +10,7 @@ def ejecutar():
     query = st.text_input("Ingresa término de búsqueda:").lower()
     
     if query:
+        # Ahora os.path ya funcionará porque importamos 'os' arriba
         if os.path.exists("data/mapa_conocimiento.json"):
             with open("data/mapa_conocimiento.json", "r") as f:
                 indice = json.load(f)
@@ -25,5 +27,4 @@ def ejecutar():
             st.error("Error: Primero activa el Módulo 37 para aprender.")
 
 if __name__ == "__main__":
-    import os
     ejecutar()

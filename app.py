@@ -1,26 +1,35 @@
 import streamlit as st
-import os
+import wikipedia
 
-st.set_page_config(page_title="A IO - Cerebro", layout="wide")
+# Configuración de idioma para Wikipedia
+wikipedia.set_lang("es")
 
-st.sidebar.title("🧠 A IO: Intelligence")
-opcion = st.sidebar.radio("Seleccionar Módulo:", 
-    ["Inicio", "35: Razonamiento", "36: Buscador", "37: Ingesta"])
+def main():
+    st.title("🧠 Cerebro A IO")
+    st.write("Estado: Conexión Neuronal Activa")
 
-if opcion == "Inicio":
-    st.title("🌐 A IO - Cerebro de Datos")
-    st.write("Bienvenido al núcleo de procesamiento masivo.")
-    if os.path.exists("data/mapa_conocimiento.json"):
-        st.success("Estado: Conocimiento Cargado.")
-    else:
-        st.warning("Estado: Memoria Vacía. Usa el Módulo 37.")
+    # --- AQUÍ RECIBIMOS LA PALABRA DE LA APP 1 ---
+    # Buscamos si en la URL viene el parámetro "busqueda"
+    parametros = st.query_params
+    palabra_enviada = parametros.get("busqueda", "")
 
-elif opcion == "35: Razonamiento":
-    import modulo_35
-    modulo_35.ejecutar()
-elif opcion == "36: Buscador":
-    import modulo_36
-    modulo_36.ejecutar()
-elif opcion == "37: Ingesta":
-    import modulo_37
-    modulo_37.ejecutar()
+    # El buscador se llena solo con la palabra que mandaste
+    query = st.text_input("Concepto a investigar:", value=palabra_enviada)
+
+    if query:
+        st.divider()
+        try:
+            with st.spinner(f"Buscando '{query}' en la base de datos..."):
+                # Obtenemos el resumen de Wikipedia
+                resultado = wikipedia.summary(query, sentences=4)
+                st.markdown("### 📄 Información Encontrada")
+                st.info(resultado)
+        except wikipedia.exceptions.PageError:
+            st.error("No se encontró información exacta. Intenta con otra palabra.")
+        except wikipedia.exceptions.DisambiguationError:
+            st.warning("El término es muy general. Sé más específico.")
+        except Exception as e:
+            st.error("Error de conexión con la base de datos.")
+
+if __name__ == "__main__":
+    main()

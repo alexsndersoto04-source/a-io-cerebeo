@@ -1,56 +1,53 @@
 import streamlit as st
 import urllib.parse
-import os
 
-# Configuración de rendimiento para el Redmi 9C
+# 1. Configuración de la aplicación
 st.set_page_config(page_title="A IO - Sistema Integrado", layout="centered")
 
 def main():
-    st.sidebar.title("🤖 A IO: Panel Central")
+    st.sidebar.title("🤖 A IO: Panel Control")
     
-    # 1. Definimos las opciones del menú
-    # Mantenemos tus 35 dimensiones y añadimos el Cerebro
+    # --- AQUÍ ESTÁ EL TRUCO PARA QUE APAREZCA ---
+    # Creamos la lista del 1 al 35
     opciones = [f"Dimensión {i}" for i in range(1, 36)]
-    opciones.append("Módulo 36: Enlace al Cerebro")
     
+    # AHORA INTEGRAMOS EL 36 MANUALMENTE PARA QUE SALGA EN EL MENÚ
+    opciones.append("Módulo 36: Enlace al Cerebro")
+
+    # Mostramos el menú con todas las opciones (1 al 36)
     seleccion = st.sidebar.selectbox("Selecciona un Módulo:", opciones)
     st.sidebar.markdown("---")
-    st.sidebar.caption("Alexander Soto | A IO Project")
 
-    # --- LÓGICA DE INTEGRACIÓN ---
+    # --- LÓGICA DE VISUALIZACIÓN ---
 
     if seleccion == "Módulo 36: Enlace al Cerebro":
-        # Este es el código nuevo que conecta con tu segunda app
+        # ESTE ES EL MÓDULO QUE SE CONECTA AL CEREBRO
         st.title("🧠 Módulo 36: Enlace Neuronal")
-        st.write("Puente de datos hacia el Cerebro externo (Wikipedia API).")
-        
-        concepto = st.text_input("Ingresa el concepto para investigación:")
-        
+        st.write("Escribe el concepto que quieres que la IA investigue en el cerebro.")
+
+        concepto = st.text_input("Término de búsqueda:")
+
         if concepto:
+            # Preparamos la URL para el salto entre apps
             query_safe = urllib.parse.quote(concepto)
-            # URL de tu app de cerebro (basada en tu captura)
             url_cerebro = f"https://a-io-cerebeo.streamlit.app/?busqueda={query_safe}"
+            
+            st.success(f"Listo para sincronizar: {concepto}")
             
             st.markdown(f"""
                 <a href="{url_cerebro}" target="_blank" style="text-decoration:none;">
-                    <div style="padding:20px; background-color:#4CAF50; color:white; text-align:center; border-radius:10px; font-weight:bold; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
-                        🚀 SINCRONIZAR CON CEREBRO: {concepto.upper()}
+                    <div style="padding:15px; background-color:#4CAF50; color:white; text-align:center; border-radius:10px; font-weight:bold;">
+                        🚀 ABRIR CEREBRO Y BUSCAR: {concepto.upper()}
                     </div>
                 </a>
             """, unsafe_allow_html=True)
-            st.info("Nota: Se abrirá en una pestaña nueva para ahorrar memoria RAM.")
 
     else:
-        # --- CARGA DE TUS 35 MÓDULOS ACTUALES ---
+        # AQUÍ SE MUESTRAN TUS OTROS 35 MÓDULOS
         st.title(f"📂 {seleccion}")
-        
-        # Aquí no tocamos tus archivos. El sistema simplemente te dice 
-        # que puedes seguir usando la lógica que ya tenías programada.
-        st.write("Lógica de procesamiento activa para esta dimensión.")
-        
-        # Alexander, aquí es donde tú ya tienes tus 'if' o llamadas 
-        # a los otros módulos. Simplemente no los borres.
-        st.warning("Usa el menú lateral para saltar al Módulo 36 cuando necesites datos de Wikipedia.")
+        st.info("Cargando lógica interna de la dimensión...")
+        # Aquí es donde va el código que ya tenías para tus 35 módulos
+        # No lo borres, simplemente déjalo debajo de este bloque.
 
 if __name__ == "__main__":
     main()

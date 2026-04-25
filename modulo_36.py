@@ -1,32 +1,46 @@
+# --- DENTRO DE TU APP.PY PRINCIPAL ---
 import streamlit as st
-import requests
+import urllib.parse
 
-def ejecutar():
-    st.header("🔍 Rastreador A IO (Enlace Activo)")
-    
-    # --- CAPTURA DE DATOS EXTERNOS ---
-    # Revisamos si la App Principal envió una búsqueda por la URL
-    params = st.query_params
-    busqueda_externa = params.get("busqueda", "")
-    
-    # Si hay búsqueda externa, la usamos; si no, dejamos el campo vacío
-    query = st.text_input("Concepto a investigar:", value=busqueda_externa)
-    
-    if query:
-        with st.spinner(f"Consultando conocimiento global sobre '{query}'..."):
-            url = f"https://es.wikipedia.org/api/rest_v1/page/summary/{query.replace(' ', '_')}"
-            headers = {"User-Agent": "A-IO-Project/1.0"}
-            
-            try:
-                response = requests.get(url, headers=headers, timeout=10)
-                if response.status_code == 200:
-                    data = response.json()
-                    st.success("✅ Datos sincronizados con el Cuerpo")
-                    st.write(data.get("extract", "No hay resumen disponible."))
-                else:
-                    st.warning("El término no se encontró o la conexión es inestable.")
-            except Exception as e:
-                st.error(f"Error de enlace: {e}")
+# ... (Tu código de configuración y menú lateral) ...
 
-if __name__ == "__main__":
-    ejecutar()
+if seleccion == "Módulo 36: Enlace al Cerebro":
+    # ESTO ES LO QUE DEBE APARECER SI NO ENCUENTRA EL ARCHIVO
+    st.title("🧠 Enlace Neuronal A IO")
+    st.markdown("---")
+    st.write("Escribe el concepto que quieres que la IA investigue en el cerebro externo.")
+
+    concepto = st.text_input("Término de búsqueda:", placeholder="Ejemplo: Robótica, Inteligencia Artificial...")
+
+    if concepto:
+        # Codificamos para que sea una URL válida
+        query_safe = urllib.parse.quote(concepto)
+        
+        # Esta es la dirección de tu cerebro que ya funciona
+        url_cerebro = f"https://a-io-cerebeo.streamlit.app/?busqueda={query_safe}"
+
+        st.success(f"Listo para enviar: **{concepto}**")
+        
+        # Botón con estilo profesional
+        st.markdown(f"""
+            <a href="{url_cerebro}" target="_blank" style="text-decoration:none;">
+                <div style="
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    border-radius: 8px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+                ">
+                    🚀 SINCRONIZAR CON CEREBRO
+                </div>
+            </a>
+        """, unsafe_allow_html=True)
+        st.caption("Al pulsar, se abrirá tu cerebro en una pestaña nueva para ahorrar RAM.")
+
+elif seleccion == "Módulo 35": # Ejemplo de otro módulo
+    st.title("Módulo 35")
+    # Aquí iría el código del 35
